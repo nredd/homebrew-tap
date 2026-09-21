@@ -1,8 +1,8 @@
 class PiCodingAgent < Formula
   desc "AI agent toolkit with nredd transcript disclosures"
   homepage "https://github.com/nredd/pi"
-  url "https://github.com/nredd/pi/releases/download/v0.85.1-nredd.3/earendil-works-pi-coding-agent-0.85.1.tgz"
-  version "0.85.1-nredd.3"
+  url "https://github.com/nredd/pi/releases/download/v0.85.1-nredd.4/earendil-works-pi-coding-agent-0.85.1.tgz"
+  version "0.85.1-nredd.4"
   sha256 "c2616b16ddd8a7dd119b05b1c4d10cad329fc8e9556cd92c261326307bce2fe8"
   license "MIT"
 
@@ -17,11 +17,23 @@ class PiCodingAgent < Formula
     end
   end
 
+  resource "pi-tui" do
+    url "https://github.com/nredd/pi/releases/download/v0.85.1-nredd.4/earendil-works-pi-tui-0.85.1.tgz"
+    sha256 "2e44e27d3743f701fb3c0b646c0df5d8ac9d53c5242ee58ab6ae93d8d131fd3c"
+  end
+
   def install
     system "npm", "install", *std_npm_args
     (bin/"pi").write_env_script libexec/"bin/pi", PI_SKIP_VERSION_CHECK: "1"
 
     node_modules = libexec/"lib/node_modules/@earendil-works/pi-coding-agent/node_modules/"
+    resource("pi-tui").stage do
+      tui_destination = node_modules/"@earendil-works/pi-tui"
+      rm_r tui_destination
+      mkdir_p tui_destination
+      cp_r Pathname("package").children, tui_destination
+    end
+
     arch = Hardware::CPU.arm? ? "arm64" : "x64"
     os = OS.linux? ? "linux" : "darwin"
     node_modules.glob("koffi/build/koffi/*").each do |dir|
