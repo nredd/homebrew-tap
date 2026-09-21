@@ -31,7 +31,7 @@ class PiCodingAgent < Formula
       tui_destination = node_modules/"@earendil-works/pi-tui"
       rm_r tui_destination
       mkdir_p tui_destination
-      cp_r Pathname("package").children, tui_destination
+      cp_r Pathname(".").children, tui_destination
     end
 
     arch = Hardware::CPU.arm? ? "arm64" : "x64"
