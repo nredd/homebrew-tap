@@ -22,7 +22,7 @@ class PiCodingAgent < Formula
   end
 
   def install
-    system "npm", "install", *std_npm_args
+    system "npm", "install", "--min-release-age=0", *std_npm_args
     (bin/"pi").write_env_script libexec/"bin/pi", PI_SKIP_VERSION_CHECK: "1"
 
     node_modules = libexec/"lib/node_modules/@earendil-works/pi-coding-agent/node_modules/"
