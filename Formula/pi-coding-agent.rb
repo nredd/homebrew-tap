@@ -7,15 +7,6 @@ class PiCodingAgent < Formula
 
   depends_on "node"
 
-  on_macos do
-    depends_on "rust" => :build
-
-    resource "clipboard" do
-      url "https://registry.npmjs.org/@mariozechner/clipboard/-/clipboard-0.3.9.tgz"
-      sha256 "25986ebeecaffadf3d1dd5f9199869057e4b64c37d7069c7f31c231dd86b5639"
-    end
-  end
-
   resource "pi-tui" do
     url "https://github.com/nredd/pi/releases/download/v0.87.1/earendil-works-pi-tui-0.87.1.tgz"
     sha256 "b023f0b3a4518ffb2258ae8298cd7b5db8c19ec2d787655a98f3e1d961fa9a01"
@@ -43,15 +34,6 @@ class PiCodingAgent < Formula
     node_modules.glob("@earendil-works/pi-tui/native/**/prebuilds/*").each do |dir|
       basename = dir.basename.to_s
       rm_r(dir) if basename != "#{os}-#{arch}"
-    end
-
-    return unless OS.mac?
-
-    # Rebuild as the npm prebuilt lacks Mach-O header space to relocate install names for bottling.
-    resource("clipboard").stage do
-      system "cargo", "build", "--lib", "--release"
-      cp "target/release/libcrosscopy_clipboard.dylib",
-         node_modules/"@mariozechner/clipboard-darwin-universal/clipboard.darwin-universal.node"
     end
   end
 
