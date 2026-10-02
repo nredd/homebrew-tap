@@ -1,16 +1,16 @@
 class PiCodingAgent < Formula
   desc "AI agent toolkit with nredd transcript disclosures"
   homepage "https://github.com/nredd/pi"
-  url "https://github.com/nredd/pi/releases/download/v0.99.1-nredd.1/earendil-works-pi-coding-agent-0.99.1.tgz"
-  version "0.99.1-nredd.1"
-  sha256 "79011df505b532bcfd6da87959d82c6ab8c1b0de484fd3e2365a84aa22f75408"
+  url "https://github.com/nredd/pi/releases/download/v1.0.0-nredd.1/earendil-works-pi-coding-agent-1.0.0.tgz"
+  version "1.0.0-nredd.1"
+  sha256 "37e6829c3031f3dbd31bbcec25986c8608c2fd3da73fb724064a82f054085c40"
   license "MIT"
 
   depends_on "node"
 
   resource "pi-tui" do
-    url "https://github.com/nredd/pi/releases/download/v0.99.1-nredd.1/earendil-works-pi-tui-0.99.1.tgz"
-    sha256 "b6e2b834d616e753d6d16d250402d4e91fb2310b2bcf2c7146f4ab8f73cd3ebf"
+    url "https://github.com/nredd/pi/releases/download/v1.0.0-nredd.1/earendil-works-pi-tui-1.0.0.tgz"
+    sha256 "3d562fe780cfbccdc36b3299e476d4ff854e26d43d5d9377c69db25e31daeeea"
   end
 
   def install
@@ -39,7 +39,7 @@ class PiCodingAgent < Formula
   end
 
   test do
-    assert_equal "0.99.1", shell_output("#{bin}/pi --version 2>&1").strip
+    assert_equal "1.0.0", shell_output("#{bin}/pi --version 2>&1").strip
     assert_match "Usage:", shell_output("#{bin}/pi --help 2>&1")
   end
 end
