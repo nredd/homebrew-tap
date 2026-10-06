@@ -7,3 +7,5 @@ brew install nredd/tap/pi-coding-agent
 ```
 
 `pi-coding-agent` packages the disclosure-enabled [`nredd/pi`](https://github.com/nredd/pi) fork.
+Settled tool rows offer disclosure only when expansion reveals extra detail; collapsed thinking
+summaries render inline Markdown, including bold headlines.
