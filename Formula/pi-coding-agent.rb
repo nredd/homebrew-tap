@@ -1,16 +1,16 @@
 class PiCodingAgent < Formula
   desc "AI agent toolkit with nredd transcript disclosures"
   homepage "https://github.com/nredd/pi"
-  url "https://github.com/nredd/pi/releases/download/v1.0.0-nredd.2/earendil-works-pi-coding-agent-1.0.0.tgz"
-  version "1.0.0-nredd.2"
-  sha256 "8f676496b8cbadb7dc340df4746802144786093ea0903397d7d3a0ad75c3f561"
+  url "https://github.com/nredd/pi/releases/download/v1.0.0-nredd.3/earendil-works-pi-coding-agent-1.0.0.tgz"
+  version "1.0.0-nredd.3"
+  sha256 "0952cf9c5d2b9db0fcadf1dd9611fac70eb870cb8e793207e26e337fdc1dd4bf"
   license "MIT"
 
   depends_on "node"
 
   resource "pi-tui" do
-    url "https://github.com/nredd/pi/releases/download/v1.0.0-nredd.2/earendil-works-pi-tui-1.0.0.tgz"
-    sha256 "3d562fe780cfbccdc36b3299e476d4ff854e26d43d5d9377c69db25e31daeeea"
+    url "https://github.com/nredd/pi/releases/download/v1.0.0-nredd.3/earendil-works-pi-tui-1.0.0.tgz"
+    sha256 "fb6026248e54fceea6376e01692a5f57c3c550e1c231fd58c086f548f99e67a3"
   end
 
   def install
