@@ -1,6 +1,6 @@
 cask "openlogi-nredd" do
-  version "0.8.11-nredd.1"
-  sha256 "334f2541e18af1fd49ce2bfca34784b58e57bc0dff379b520c0c7d0b1fe58308"
+  version "0.8.11-nredd.2"
+  sha256 "377823cdb6f548ab3e83e0ea78929d87b84771427a0c6bae5ceba693be357d33"
 
   url "https://github.com/nredd/OpenLogi/releases/download/v#{version}/OpenLogi-v#{version}-macos-arm64.zip"
   name "OpenLogi (nredd fork)"
@@ -36,5 +36,9 @@ cask "openlogi-nredd" do
     This build is ad-hoc signed. macOS treats it as a different app than the upstream
     Developer ID build, so grant Accessibility and Input Monitoring again after installing,
     and again after each new release.
+
+    Gatekeeper blocks the first launch (the build is not notarized). In the dialog click
+    "Done", not "Move to Trash", then System Settings > Privacy & Security > "Open Anyway".
+    Afterwards enable OpenLogi and OpenLogi Agent in Login Items & Extensions.
   EOS
 end
