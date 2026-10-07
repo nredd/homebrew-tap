@@ -10,7 +10,7 @@ cask "openlogi-nredd" do
   # Ad-hoc signed, so there is no update feed to follow. Switch back to the stock cask once
   # AprilNEA/OpenLogi ships the phased horizontal scroll fix.
   conflicts_with cask: "openlogi"
-  depends_on macos: ">= :ventura"
+  depends_on macos: :ventura
   depends_on arch: :arm64
 
   app "OpenLogi.app"
