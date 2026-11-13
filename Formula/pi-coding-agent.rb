@@ -56,18 +56,20 @@ class PiCodingAgent < Formula
     assert_equal "1.3.0", shell_output("#{bin}/pi --version 2>&1").strip
     assert_match "Usage:", shell_output("#{bin}/pi --help 2>&1")
 
-    # Each fork release asset must have replaced its registry build. The fork package.json
-    # differs from the registry one, so a dropped or misplaced stage fails byte comparison.
+    # Each fork release asset must have replaced its registry build. Compare a dist file that
+    # carries real fork changes (not the manifest, which differs only incidentally), so a
+    # dropped or misplaced stage fails byte comparison.
     node_modules = libexec/"lib/node_modules/@earendil-works/pi-coding-agent/node_modules/@earendil-works"
-    %w[pi-agent-core pi-ai pi-tui].each do |name|
+    fork_files = {
+      "pi-agent-core" => "dist/agent-loop.js",
+      "pi-ai"         => "dist/api/openai-responses-shared.js",
+      "pi-tui"        => "dist/tui.js",
+    }
+    fork_files.each do |name, file|
       resource(name).stage do
-        assert_equal Pathname("package.json").read, (node_modules/name/"package.json").read,
-                     "#{name} was not replaced by the fork release asset"
+        assert_equal Pathname(file).read, (node_modules/name/file).read,
+                     "#{name} #{file} was not replaced by the fork release asset"
       end
     end
-
-    # Fork-only marker in the dist as well, not just the manifest.
-    pi_ai = node_modules/"pi-ai"
-    assert_match "DEFAULT_REASONING_SUMMARY", (pi_ai/"dist/api/openai-responses-shared.js").read
   end
 end
