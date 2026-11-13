@@ -8,6 +8,16 @@ class PiCodingAgent < Formula
 
   depends_on "node"
 
+  resource "pi-agent-core" do
+    url "https://github.com/nredd/pi/releases/download/v1.3.0-nredd.10/earendil-works-pi-agent-core-1.3.0.tgz"
+    sha256 "1e714468b1cd0a05ff7aed322c7173bedc6edbf016ed061478c62b545bce3022"
+  end
+
+  resource "pi-ai" do
+    url "https://github.com/nredd/pi/releases/download/v1.3.0-nredd.10/earendil-works-pi-ai-1.3.0.tgz"
+    sha256 "c83fa27ce06da978f532f409832c7fc111707c7ffbf19086795ddfaa88f97410"
+  end
+
   resource "pi-tui" do
     url "https://github.com/nredd/pi/releases/download/v1.3.0-nredd.10/earendil-works-pi-tui-1.3.0.tgz"
     sha256 "4f1e74a43649fd2024ad7f5ba1f6ed5efa651df024caad1a60f0d4875be58201"
@@ -18,11 +28,15 @@ class PiCodingAgent < Formula
     (bin/"pi").write_env_script libexec/"bin/pi", PI_SKIP_VERSION_CHECK: "1"
 
     node_modules = libexec/"lib/node_modules/@earendil-works/pi-coding-agent/node_modules/"
-    resource("pi-tui").stage do
-      tui_destination = node_modules/"@earendil-works/pi-tui"
-      rm_r tui_destination
-      mkdir_p tui_destination
-      cp_r Pathname(".").children, tui_destination
+    # The coding-agent tarball pins these at exact upstream versions, so npm installs the
+    # registry builds. Replace them with the fork release assets.
+    %w[pi-agent-core pi-ai pi-tui].each do |name|
+      resource(name).stage do
+        destination = node_modules/"@earendil-works"/name
+        rm_r destination
+        mkdir_p destination
+        cp_r Pathname(".").children, destination
+      end
     end
 
     arch = Hardware::CPU.arm? ? "arm64" : "x64"
@@ -41,5 +55,9 @@ class PiCodingAgent < Formula
   test do
     assert_equal "1.3.0", shell_output("#{bin}/pi --version 2>&1").strip
     assert_match "Usage:", shell_output("#{bin}/pi --help 2>&1")
+
+    # Fork-only marker proves the release asset replaced the registry pi-ai.
+    pi_ai = libexec/"lib/node_modules/@earendil-works/pi-coding-agent/node_modules/@earendil-works/pi-ai"
+    assert_match "DEFAULT_REASONING_SUMMARY", (pi_ai/"dist/api/openai-responses-shared.js").read
   end
 end
