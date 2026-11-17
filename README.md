@@ -1,6 +1,7 @@
 # nredd Homebrew tap
 
-Personal formulae for maintained forks.
+Personal formulae for maintained forks. The formula selects core `v1.3.0-nredd.12`.
+Source preparation does not upgrade an existing installation.
 
 ```bash
 brew install nredd/tap/pi-coding-agent
