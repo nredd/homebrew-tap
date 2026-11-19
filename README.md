@@ -1,6 +1,6 @@
 # nredd Homebrew tap
 
-Personal formulae for maintained forks. The formula selects core `v1.3.0-nredd.12`.
+Personal formulae for maintained forks. The formula selects core `v1.3.0-nredd.13`.
 Source preparation does not upgrade an existing installation.
 
 ```bash
